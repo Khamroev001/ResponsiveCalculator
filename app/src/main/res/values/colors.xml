@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_light">#E6E6E6</color>
+    <color name="background_light">#EDEDED</color>
     <color name="btn_light_grey">#D1D2DA</color>
-    <color name="btn_white">#fff</color>
+    <color name="btn_white">#FFFFFF</color>
     <color name="btn_grey">#4E505F</color>
     <color name="btn_blue">#4B5EFC</color>
     <color name="background_dark">#17171C</color>

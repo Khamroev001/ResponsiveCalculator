@@ -23,11 +23,14 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
     private lateinit var point: Button
     private lateinit var clear: Button
     private lateinit var delete: Button
+    private lateinit var percent: Button
 
     private lateinit var div: Button
     private lateinit var multiply: Button
     private lateinit var plus: Button
     private lateinit var minus: Button
+
+    private lateinit var plusMinus: Button
 
     private lateinit var oper: TextView
     private lateinit var result: TextView
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
     private var isPoint = true
     private var isSymbol = false
+    private var isPercent = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,15 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
             if (isPoint && oper.text[oper.text.length - 1].isDigit()) {
                 oper.text = oper.text.toString() + "."
                 isPoint = false
+                isSymbol = false
+                isPercent = false
+            }
+        }
+
+        percent.setOnClickListener {
+            if (isPercent) {
+                oper.text = oper.text.toString() + "%"
+                isPercent = false
                 isSymbol = false
             }
         }
@@ -91,6 +104,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         plus.setOnClickListener { addSymbol(plus.text.toString()) }
         minus.setOnClickListener { addSymbol(minus.text.toString()) }
 
+        switchBtn.isChecked=false
         switchBtn.setOnClickListener {
             if (switchBtn.isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -118,11 +132,13 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         clear = findViewById(R.id.restart)
         point = findViewById(R.id.dot)
         delete = findViewById(R.id.delete)
+        percent = findViewById(R.id.percent)
 
         div = findViewById(R.id.division)
         multiply = findViewById(R.id.multiply)
         plus = findViewById(R.id.plus)
         minus = findViewById(R.id.minus)
+        plusMinus = findViewById(R.id.plus_minus)
 
         switchBtn = findViewById(R.id.themeSwitcher)
     }
@@ -137,13 +153,27 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
 
         result.text = calculate()
         isSymbol = true
+        isPercent = true
     }
+
 
     private fun calculate(): String {
         var res: Any = "0"
         var myList: MutableList<Any> = createArray(oper.text.toString())
         var i = 0
         var j = 0
+        var f = 0
+
+        while (f < myList.size) {
+            if (myList[f].toString() == "%") {
+                res = (myList[f - 1].toString().toDouble()) / 100 * (myList[f + 1].toString().toDouble())
+                replace(f, myList)
+                myList.add(f - 1, res)
+                f -= 2
+            }
+            f++
+        }
+
 
         if (myList.size >= 3 && myList.size % 2 != 0) {
             while (i < myList.size) {
@@ -165,7 +195,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
                 i++
             }
             while (j < myList.size) {
-                if ((myList[j].toString() == "+") || (myList[j].toString() == "-")) {
+                if ((myList[j].toString() == "+") || (myList[j].toString() == "–")) {
                     if (myList[j].toString() == "+") {
                         res = (myList[j - 1].toString().toDouble()) + (myList[j + 1].toString()
                             .toDouble())
@@ -183,12 +213,8 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
                 j++
             }
         }
-        val number:Double = 0.0449999
-        val number3digits:Double = String.format("%.3f", number).toDouble()
-        val number2digits:Double = String.format("%.2f", number3digits).toDouble()
-        val solution:Double = String.format("%.1f", number2digits).toDouble()
-        if (myList.size != 1) {
 
+        if (myList.size != 1) {
             res = (Math.round(res.toString().toDouble() * 10.0) / 10.0).toString()
         }
         if (myList.size == 1) {
@@ -203,6 +229,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         result.text = "0"
         isPoint = true
         isSymbol = false
+        isPercent = false
     }
 
     private fun replace(i: Int, myList: MutableList<Any>) {
@@ -215,6 +242,7 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         if (isSymbol && oper.text[oper.text.length - 1] != '.') {
             oper.text = oper.text.toString() + symbol
             isSymbol = false
+            isPercent = false
         } else {
             if (oper.text != "0" && oper.text[oper.text.length - 1] != '.') {
                 oper.text = oper.text.substring(0, oper.text.length - 1) + symbol
@@ -241,5 +269,6 @@ class MainActivity : AppCompatActivity(),View.OnClickListener {
         }
         return list
     }
+
 
 }
