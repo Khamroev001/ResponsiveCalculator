@@ -15,10 +15,10 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
         android:autoSizeMaxTextSize="40sp"
-        android:autoSizeMinTextSize="25sp"
+        android:autoSizeMinTextSize="20sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/worksans"
-        android:maxLines="3"
+        android:maxLines="2"
         android:paddingEnd="20dp"
         android:text="0"
         android:textAlignment="textEnd"
@@ -38,7 +38,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
         android:autoSizeMaxTextSize="80sp"
-        android:autoSizeMinTextSize="40sp"
+        android:autoSizeMinTextSize="30sp"
         android:autoSizeTextType="uniform"
         android:maxLines="1"
         android:text="0"
@@ -78,7 +78,7 @@
                 android:text="C" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/plus_minus"
+                android:id="@+id/power"
                 style="@style/btn_grey"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -87,8 +87,10 @@
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:cornerRadius="20dp"
-                app:icon="@drawable/ic___icon"
-                app:iconGravity="textStart" />
+                app:icon="@drawable/power"
+                app:iconSize="40dp"
+                android:textAlignment="center"
+                app:iconGravity="textEnd" />
 
 
             <androidx.appcompat.widget.AppCompatButton
@@ -286,11 +288,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="16dp"
                 android:layout_weight="1"
+                android:text=""
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:cornerRadius="20dp"
                 app:icon="@drawable/ic_delete"
-                app:iconGravity="textStart" />
+                android:textAlignment="textStart"
+                app:iconGravity="textEnd" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/equals"
